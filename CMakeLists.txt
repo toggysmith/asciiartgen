@@ -1,7 +1,37 @@
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.9.0)
 
 project(asciiartgen LANGUAGES CXX)
 
 set(ASCIIARTGEN_SOURCES "src/main.cpp")
+set(ASCIIARTGEN_EXTERNAL "external")
+set(ASCIIARTGEN_EXECUTABLE_NAME "asciiartgen")
 
-add_executable(asciiartgen ${ASCIIARTGEN_SOURCES})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+set(BUILD_EXAMPLES OFF)
+
+add_executable(${ASCIIARTGEN_EXECUTABLE_NAME} ${ASCIIARTGEN_SOURCES})
+
+# Add SFML
+set(BUILD_SHARED_LIBS OFF)
+set(SFML_USE_STATIC_LIBS ON)
+set(SFML_BUILD_EXAMPLES OFF)
+set(SFML_BUILD_DOC OFF)
+set(SFML_BUILD_AUDIO OFF)
+set(SFML_BUILD_GRAPHICS ON)
+set(SFML_BUILD_WINDOW ON)
+set(SFML_BUILD_NETWORK OFF)
+add_subdirectory(${ASCIIARTGEN_EXTERNAL}/SFML)
+target_include_directories(${ASCIIARTGEN_EXECUTABLE_NAME} PRIVATE ${ASCIIARTGEN_EXTERNAL})
+target_link_libraries(${ASCIIARTGEN_EXECUTABLE_NAME} PRIVATE sfml-graphics sfml-window)
+
+# Avoid /Debug and /Release directories 
+set_target_properties(${ASCIIARTGEN_EXECUTABLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR})
+set_target_properties(${ASCIIARTGEN_EXECUTABLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR})
+
+# Copy across everything in data directory
+add_custom_command(TARGET ${ASCIIARTGEN_EXECUTABLE_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                           ${CMAKE_CURRENT_SOURCE_DIR}/data
+                           ${CMAKE_CURRENT_BINARY_DIR}/data)
