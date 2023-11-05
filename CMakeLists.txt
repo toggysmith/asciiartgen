@@ -2,12 +2,14 @@ cmake_minimum_required(VERSION 3.9.0)
 
 project(asciiartgen LANGUAGES CXX)
 
-set(ASCIIARTGEN_SOURCES "src/main.cpp")
+set(ASCIIARTGEN_SOURCES "src/main.cpp" "src/conversion_method.cpp")
 set(ASCIIARTGEN_EXTERNAL "external")
 set(ASCIIARTGEN_EXECUTABLE_NAME "asciiartgen")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(BUILD_EXAMPLES OFF)
 

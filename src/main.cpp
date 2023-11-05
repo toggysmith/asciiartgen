@@ -1,8 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdint>
 
 #include <SFML/Graphics.hpp>
+
+#include "conversion_method.hpp"
 
 /**
  * @brief Validate whether the arguments meet the expected format.
@@ -13,7 +16,7 @@
  * 
  * @param arguments The arguments.
  * @return Whether or not the arguments are valid.
-*/
+ */
 const bool validate_arguments(const std::vector<std::string> arguments) {
     const bool are_there_two_arguments{ arguments.size() == 2 };
     
@@ -44,11 +47,25 @@ int main(int argc, char* argv[]) {
 
     image.loadFromFile(arguments[1]);
 
-    std::cout << image.getSize().x << " x " << image.getSize().y << std::endl;
+    // WHY: To demonstrate that the average method of RGBA-to-grayscale works.
+    sf::Image grayscale_average_method_image{ image };
+    for (std::uint64_t x{ 0 }; x < image.getSize().x; x++) {
+        for (std::uint64_t y{ 0 }; y < image.getSize().y; y++) {
+            const auto [intensity, alpha] = ConversionMethod(ConversionMethod::AVERAGE_METHOD).convert(image.getPixel(x, y));
+            grayscale_average_method_image.setPixel(x, y, sf::Color(intensity, intensity, intensity, alpha));
+        }
+    }
+    grayscale_average_method_image.saveToFile("data/grayscale_average_method.png");
 
-    std::cout << "R: " << static_cast<int>(image.getPixel(0, 0).r) << std::endl;
-    std::cout << "G: " << static_cast<int>(image.getPixel(0, 0).g) << std::endl;
-    std::cout << "B: " << static_cast<int>(image.getPixel(0, 0).b) << std::endl;
+    // WHY: To demonstrate that the weighted method of RGBA-to-grayscale works.
+    sf::Image grayscale_weighted_method_image{ image };
+    for (std::uint64_t x{ 0 }; x < image.getSize().x; x++) {
+        for (std::uint64_t y{ 0 }; y < image.getSize().y; y++) {
+            const auto [intensity, alpha] = ConversionMethod(ConversionMethod::WEIGHTED_METHOD).convert(image.getPixel(x, y));
+            grayscale_weighted_method_image.setPixel(x, y, sf::Color(intensity, intensity, intensity, alpha));
+        }
+    }
+    grayscale_weighted_method_image.saveToFile("data/grayscale_weighted_method.png");
 
     std::exit(EXIT_SUCCESS);
 }
