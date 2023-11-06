@@ -1,8 +1,13 @@
+#ifndef ASCIIARTGEN_CONVERSION_METHOD_HPP
+#define ASCIIARTGEN_CONVERSION_METHOD_HPP
+
 #include <cstdint>
 #include <tuple>
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
+
+#include "color.hpp"
 
 /**
  * @brief An 'enum class' for selecting what method to use to convert RGBA
@@ -31,11 +36,13 @@ class ConversionMethod {
         using GrayscaleAlpha = std::uint8_t;
         using GrayscaleColor = std::pair<GrayscaleIntensity, GrayscaleAlpha>;
 
-        GrayscaleColor convert(const sf::Color) const;
+        GrayscaleColor convert(const Color) const;
     
     private:
         Enum e;
 
-        GrayscaleColor average_method(const sf::Color) const;
-        GrayscaleColor weighted_method(const sf::Color) const;
+        GrayscaleColor average_method(const Color) const;
+        GrayscaleColor weighted_method(const Color) const;
 };
+
+#endif

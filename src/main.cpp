@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     sf::Image grayscale_average_method_image{ image };
     for (std::uint64_t x{ 0 }; x < image.getSize().x; x++) {
         for (std::uint64_t y{ 0 }; y < image.getSize().y; y++) {
-            const auto [intensity, alpha] = ConversionMethod(ConversionMethod::AVERAGE_METHOD).convert(image.getPixel(x, y));
+            const auto [intensity, alpha] = ConversionMethod(ConversionMethod::AVERAGE_METHOD).convert(Color(image.getPixel(x, y)));
             grayscale_average_method_image.setPixel(x, y, sf::Color(intensity, intensity, intensity, alpha));
         }
     }
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     sf::Image grayscale_weighted_method_image{ image };
     for (std::uint64_t x{ 0 }; x < image.getSize().x; x++) {
         for (std::uint64_t y{ 0 }; y < image.getSize().y; y++) {
-            const auto [intensity, alpha] = ConversionMethod(ConversionMethod::WEIGHTED_METHOD).convert(image.getPixel(x, y));
+            const auto [intensity, alpha] = ConversionMethod(ConversionMethod::WEIGHTED_METHOD).convert(Color(image.getPixel(x, y)));
             grayscale_weighted_method_image.setPixel(x, y, sf::Color(intensity, intensity, intensity, alpha));
         }
     }

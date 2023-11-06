@@ -10,7 +10,7 @@
  * @return The grayscale color.
  */
 ConversionMethod::GrayscaleColor
-ConversionMethod::convert(const sf::Color color) const {
+ConversionMethod::convert(const Color color) const {
     switch (e) {
         case Enum::AVERAGE_METHOD: return ConversionMethod::average_method(color);
         case Enum::WEIGHTED_METHOD: return ConversionMethod::weighted_method(color);
@@ -35,7 +35,7 @@ ConversionMethod::convert(const sf::Color color) const {
  * @return The grayscale color.
  */
 ConversionMethod::GrayscaleColor
-ConversionMethod::average_method(const sf::Color color) const {
+ConversionMethod::average_method(const Color color) const {
     const GrayscaleIntensity grayscale_intensity{
         static_cast<GrayscaleIntensity>((color.r + color.g + color.b) / 3.0)
     };
@@ -55,7 +55,7 @@ ConversionMethod::average_method(const sf::Color color) const {
  * @return The grayscale color.
  */
 ConversionMethod::GrayscaleColor
-ConversionMethod::weighted_method(const sf::Color color) const {
+ConversionMethod::weighted_method(const Color color) const {
     // WHY: The red, green, and blue channels do not contribute equally to the final image.
     //      These coefficients reflect the fact that 'green' light is the major component
     //      of luminance, responsible for the majority of light perceived by humans, and
