@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include <SFML/Graphics.hpp>
+#include <cxxopts/cxxopts.hpp>
 
 #include "conversion_method.hpp"
 
@@ -83,6 +84,15 @@ sf::Image resize_image(sf::Image input_image, const std::uint64_t width, const s
     return image;
 }
 
+/**
+ * @brief Serve as the entry point for the program.
+ * 
+ * 
+ * 
+ * @param argc The number of arguments.
+ * @param argv The arguments as an array.
+ * @return Whether or not the program was run successfully.
+ */
 int main(int argc, char* argv[]) {
     // WHY: It's safer + more convenient to deal with a C++ container.
     std::vector<std::string> arguments(argv, (argv) + argc);
